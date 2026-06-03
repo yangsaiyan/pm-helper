@@ -1,7 +1,11 @@
 export const COLUMN_CATEGORY = {
-  TODO: 0,
-  IN_PROGRESS: 1,
-  DONE: 2,
+  BACKLOG: 0,
+  TODO: 1,
+  IN_PROGRESS: 2,
+  REVIEW: 3,
+  BLOCKED: 4,
+  DONE: 5,
+  CANCELLED: 6,
 } as const;
 
 export type ColumnCategory =

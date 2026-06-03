@@ -31,9 +31,13 @@ describe("shared mapping constants", () => {
 
   it("keeps column category order sortable from todo to done", () => {
     expect(COLUMN_CATEGORY).toEqual({
-      TODO: 0,
-      IN_PROGRESS: 1,
-      DONE: 2,
+      BACKLOG: 0,
+      TODO: 1,
+      IN_PROGRESS: 2,
+      REVIEW: 3,
+      BLOCKED: 4,
+      DONE: 5,
+      CANCELLED: 6,
     });
   });
 
