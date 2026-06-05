@@ -1,3 +1,4 @@
+import { ORGANIZATION_ROLE, type OrganizationRole } from "./organization/roles";
 import { createLabelGetter } from "./shared";
 
 export const PERMISSION = {
@@ -16,3 +17,39 @@ export const PERMISSION_LABEL: Record<Permission, string> = {
 
 export const getPermissionLabel =
   createLabelGetter<Permission>(PERMISSION_LABEL);
+
+export const ORG_PERMISSIONS: Record<
+  OrganizationRole,
+  readonly Permission[]
+> = {
+  [ORGANIZATION_ROLE.OWNER]: [
+    PERMISSION.WATCH,
+    PERMISSION.EDIT,
+    PERMISSION.MANAGE_ROLES,
+  ],
+  [ORGANIZATION_ROLE.ADMIN]: [
+    PERMISSION.WATCH,
+    PERMISSION.EDIT,
+    PERMISSION.MANAGE_ROLES,
+  ],
+  [ORGANIZATION_ROLE.MEMBER]: [PERMISSION.WATCH, PERMISSION.EDIT],
+  [ORGANIZATION_ROLE.GUEST]: [PERMISSION.WATCH],
+};
+
+export const PROJECT_PERMISSIONS: Record<
+  OrganizationRole,
+  readonly Permission[]
+> = {
+  [ORGANIZATION_ROLE.OWNER]: [
+    PERMISSION.WATCH,
+    PERMISSION.EDIT,
+    PERMISSION.MANAGE_ROLES,
+  ],
+  [ORGANIZATION_ROLE.ADMIN]: [
+    PERMISSION.WATCH,
+    PERMISSION.EDIT,
+    PERMISSION.MANAGE_ROLES,
+  ],
+  [ORGANIZATION_ROLE.MEMBER]: [PERMISSION.WATCH, PERMISSION.EDIT],
+  [ORGANIZATION_ROLE.GUEST]: [PERMISSION.WATCH],
+};

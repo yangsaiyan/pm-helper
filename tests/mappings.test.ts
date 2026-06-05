@@ -5,7 +5,9 @@ import {
   ISSUE_PRIORITY_LABEL,
   ISSUE_TYPE,
   ORGANIZATION_ROLE,
+  ORG_PERMISSIONS,
   PERMISSION,
+  PROJECT_PERMISSIONS,
   REQUEST_LOG_METHOD,
   getIssuePriorityLabel,
   getIssueTypeLabel,
@@ -75,5 +77,25 @@ describe("shared mapping constants", () => {
 
   it("keeps permission constants stable", () => {
     expect(PERMISSION).toEqual({ WATCH: 0, EDIT: 1, MANAGE_ROLES: 2 });
+  });
+
+  it("grants owner all organization permissions", () => {
+    expect(ORG_PERMISSIONS[ORGANIZATION_ROLE.OWNER]).toEqual([
+      PERMISSION.WATCH,
+      PERMISSION.EDIT,
+      PERMISSION.MANAGE_ROLES,
+    ]);
+  });
+
+  it("restricts guest to watch only", () => {
+    expect(ORG_PERMISSIONS[ORGANIZATION_ROLE.GUEST]).toEqual([PERMISSION.WATCH]);
+    expect(PROJECT_PERMISSIONS[ORGANIZATION_ROLE.GUEST]).toEqual([PERMISSION.WATCH]);
+  });
+
+  it("grants member watch and edit", () => {
+    expect(ORG_PERMISSIONS[ORGANIZATION_ROLE.MEMBER]).toEqual([
+      PERMISSION.WATCH,
+      PERMISSION.EDIT,
+    ]);
   });
 });
