@@ -53,3 +53,12 @@ export const PROJECT_PERMISSIONS: Record<
   [ORGANIZATION_ROLE.MEMBER]: [PERMISSION.WATCH, PERMISSION.EDIT],
   [ORGANIZATION_ROLE.GUEST]: [PERMISSION.WATCH],
 };
+
+export const hasPermission = (
+  role: OrganizationRole,
+  permission: Permission,
+  scope: "organization" | "project" = "organization",
+): boolean => {
+  const matrix = scope === "organization" ? ORG_PERMISSIONS : PROJECT_PERMISSIONS;
+  return matrix[role].includes(permission);
+};

@@ -13,6 +13,7 @@ import {
   getIssueTypeLabel,
   getPermissionLabel,
   getRequestLogMethodLabel,
+  hasPermission,
   mappingEntries,
 } from "../src";
 
@@ -97,5 +98,21 @@ describe("shared mapping constants", () => {
       PERMISSION.WATCH,
       PERMISSION.EDIT,
     ]);
+  });
+
+  it("checks permissions correctly", () => {
+    expect(hasPermission(ORGANIZATION_ROLE.OWNER, PERMISSION.WATCH)).toBe(true);
+    expect(hasPermission(ORGANIZATION_ROLE.OWNER, PERMISSION.MANAGE_ROLES)).toBe(true);
+    expect(hasPermission(ORGANIZATION_ROLE.GUEST, PERMISSION.EDIT)).toBe(false);
+    expect(hasPermission(ORGANIZATION_ROLE.GUEST, PERMISSION.MANAGE_ROLES)).toBe(false);
+  });
+
+  it("checks project scope permissions", () => {
+    expect(hasPermission(ORGANIZATION_ROLE.MEMBER, PERMISSION.EDIT, "project")).toBe(true);
+    expect(hasPermission(ORGANIZATION_ROLE.GUEST, PERMISSION.EDIT, "project")).toBe(false);
+  });
+
+  it("defaults to organization scope", () => {
+    expect(hasPermission(ORGANIZATION_ROLE.ADMIN, PERMISSION.MANAGE_ROLES)).toBe(true);
   });
 });
