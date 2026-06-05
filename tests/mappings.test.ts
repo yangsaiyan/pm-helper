@@ -5,9 +5,11 @@ import {
   ISSUE_PRIORITY_LABEL,
   ISSUE_TYPE,
   ORGANIZATION_ROLE,
+  PERMISSION,
   REQUEST_LOG_METHOD,
   getIssuePriorityLabel,
   getIssueTypeLabel,
+  getPermissionLabel,
   getRequestLogMethodLabel,
   mappingEntries,
 } from "../src";
@@ -69,5 +71,9 @@ describe("shared mapping constants", () => {
     });
     expect(getRequestLogMethodLabel(0)).toBe("GET");
     expect(getRequestLogMethodLabel(4)).toBe("DELETE");
+  });
+
+  it("keeps permission constants stable", () => {
+    expect(PERMISSION).toEqual({ WATCH: 0, EDIT: 1, MANAGE_ROLES: 2 });
   });
 });

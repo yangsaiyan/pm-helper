@@ -1,6 +1,7 @@
 export * from "./boards";
 export * from "./issues";
 export * from "./organization";
+export * from "./permissions";
 export * from "./projects";
 export * from "./recent-views";
 export * from "./request-logs";
