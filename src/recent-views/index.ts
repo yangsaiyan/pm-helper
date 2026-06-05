@@ -3,3 +3,6 @@ export const RECENT_VIEW_ENTITY = {
   PROJECT: "project",
   FILE: "file",
 } as const;
+
+export type RecentViewEntity =
+  (typeof RECENT_VIEW_ENTITY)[keyof typeof RECENT_VIEW_ENTITY];
