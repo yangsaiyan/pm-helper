@@ -5,8 +5,10 @@ import {
   ISSUE_PRIORITY_LABEL,
   ISSUE_TYPE,
   ORGANIZATION_ROLE,
+  REQUEST_LOG_METHOD,
   getIssuePriorityLabel,
   getIssueTypeLabel,
+  getRequestLogMethodLabel,
   mappingEntries,
 } from "../src";
 
@@ -55,5 +57,17 @@ describe("shared mapping constants", () => {
       { key: "FEATURE", value: 3 },
       { key: "SUBTASK", value: 4 },
     ]);
+  });
+
+  it("keeps request log method mapping stable", () => {
+    expect(REQUEST_LOG_METHOD).toEqual({
+      GET: 0,
+      POST: 1,
+      PUT: 2,
+      PATCH: 3,
+      DELETE: 4,
+    });
+    expect(getRequestLogMethodLabel(0)).toBe("GET");
+    expect(getRequestLogMethodLabel(4)).toBe("DELETE");
   });
 });
