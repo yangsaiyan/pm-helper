@@ -7,6 +7,7 @@ import {
   ORGANIZATION_ROLE,
   ORG_PERMISSIONS,
   PERMISSION,
+  PERMISSION_LABEL,
   PROJECT_PERMISSIONS,
   REQUEST_LOG_METHOD,
   getIssuePriorityLabel,
@@ -78,6 +79,19 @@ describe("shared mapping constants", () => {
 
   it("keeps permission constants stable", () => {
     expect(PERMISSION).toEqual({ WATCH: 0, EDIT: 1, MANAGE_ROLES: 2 });
+  });
+
+  it("keeps permission label map stable", () => {
+    expect(PERMISSION_LABEL).toEqual({
+      [PERMISSION.WATCH]: "Watch",
+      [PERMISSION.EDIT]: "Edit",
+      [PERMISSION.MANAGE_ROLES]: "Manage Roles",
+    });
+  });
+
+  it("returns permission labels from numeric mapping values", () => {
+    expect(getPermissionLabel(PERMISSION.WATCH)).toBe("Watch");
+    expect(getPermissionLabel(PERMISSION.MANAGE_ROLES)).toBe("Manage Roles");
   });
 
   it("grants owner all organization permissions", () => {
