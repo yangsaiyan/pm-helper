@@ -10,6 +10,7 @@ import {
   PERMISSION_LABEL,
   PROJECT_PERMISSIONS,
   REQUEST_LOG_METHOD,
+  canDelete,
   getIssuePriorityLabel,
   getIssueTypeLabel,
   getPermissionLabel,
@@ -78,7 +79,7 @@ describe("shared mapping constants", () => {
   });
 
   it("keeps permission constants stable", () => {
-    expect(PERMISSION).toEqual({ WATCH: 0, EDIT: 1, MANAGE_ROLES: 2 });
+    expect(PERMISSION).toEqual({ WATCH: 0, EDIT: 1, MANAGE_ROLES: 2, DELETE: 3 });
   });
 
   it("keeps permission label map stable", () => {
@@ -86,6 +87,7 @@ describe("shared mapping constants", () => {
       [PERMISSION.WATCH]: "Watch",
       [PERMISSION.EDIT]: "Edit",
       [PERMISSION.MANAGE_ROLES]: "Manage Roles",
+      [PERMISSION.DELETE]: "Delete",
     });
   });
 
@@ -128,5 +130,17 @@ describe("shared mapping constants", () => {
 
   it("defaults to organization scope", () => {
     expect(hasPermission(ORGANIZATION_ROLE.ADMIN, PERMISSION.MANAGE_ROLES)).toBe(true);
+  });
+
+  it("allows issue deletion with EDIT permission", () => {
+    expect(canDelete(ORGANIZATION_ROLE.MEMBER, "issue")).toBe(true);
+    expect(canDelete(ORGANIZATION_ROLE.GUEST, "issue")).toBe(false);
+  });
+
+  it("restricts project/org deletion to creator", () => {
+    expect(canDelete(ORGANIZATION_ROLE.ADMIN, "project", true)).toBe(true);
+    expect(canDelete(ORGANIZATION_ROLE.ADMIN, "project", false)).toBe(false);
+    expect(canDelete(ORGANIZATION_ROLE.OWNER, "organization", true)).toBe(true);
+    expect(canDelete(ORGANIZATION_ROLE.MEMBER, "organization", false)).toBe(false);
   });
 });
