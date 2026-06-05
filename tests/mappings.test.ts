@@ -5,17 +5,13 @@ import {
   ISSUE_PRIORITY_LABEL,
   ISSUE_TYPE,
   ORGANIZATION_ROLE,
-  ORG_PERMISSIONS,
   PERMISSION,
   PERMISSION_LABEL,
-  PROJECT_PERMISSIONS,
   REQUEST_LOG_METHOD,
-  canDelete,
   getIssuePriorityLabel,
   getIssueTypeLabel,
   getPermissionLabel,
   getRequestLogMethodLabel,
-  hasPermission,
   mappingEntries,
 } from "../src";
 
@@ -79,68 +75,33 @@ describe("shared mapping constants", () => {
   });
 
   it("keeps permission constants stable", () => {
-    expect(PERMISSION).toEqual({ WATCH: 0, EDIT: 1, MANAGE_ROLES: 2, DELETE: 3 });
+    expect(PERMISSION).toEqual({
+      ORG_MANAGE: "org.manage",
+      MEMBER_INVITE: "member.invite",
+      PROJECT_CREATE: "project.create",
+      PROJECT_UPDATE: "project.update",
+      PROJECT_DELETE: "project.delete",
+      ISSUE_CREATE: "issue.create",
+      ISSUE_UPDATE: "issue.update",
+      ISSUE_DELETE: "issue.delete",
+    });
   });
 
   it("keeps permission label map stable", () => {
     expect(PERMISSION_LABEL).toEqual({
-      [PERMISSION.WATCH]: "Watch",
-      [PERMISSION.EDIT]: "Edit",
-      [PERMISSION.MANAGE_ROLES]: "Manage Roles",
-      [PERMISSION.DELETE]: "Delete",
+      [PERMISSION.ORG_MANAGE]: "Manage Organization",
+      [PERMISSION.MEMBER_INVITE]: "Invite Members",
+      [PERMISSION.PROJECT_CREATE]: "Create Projects",
+      [PERMISSION.PROJECT_UPDATE]: "Update Projects",
+      [PERMISSION.PROJECT_DELETE]: "Delete Projects",
+      [PERMISSION.ISSUE_CREATE]: "Create Issues",
+      [PERMISSION.ISSUE_UPDATE]: "Update Issues",
+      [PERMISSION.ISSUE_DELETE]: "Delete Issues",
     });
   });
 
-  it("returns permission labels from numeric mapping values", () => {
-    expect(getPermissionLabel(PERMISSION.WATCH)).toBe("Watch");
-    expect(getPermissionLabel(PERMISSION.MANAGE_ROLES)).toBe("Manage Roles");
-  });
-
-  it("grants owner all organization permissions", () => {
-    expect(ORG_PERMISSIONS[ORGANIZATION_ROLE.OWNER]).toEqual([
-      PERMISSION.WATCH,
-      PERMISSION.EDIT,
-      PERMISSION.MANAGE_ROLES,
-    ]);
-  });
-
-  it("restricts guest to watch only", () => {
-    expect(ORG_PERMISSIONS[ORGANIZATION_ROLE.GUEST]).toEqual([PERMISSION.WATCH]);
-    expect(PROJECT_PERMISSIONS[ORGANIZATION_ROLE.GUEST]).toEqual([PERMISSION.WATCH]);
-  });
-
-  it("grants member watch and edit", () => {
-    expect(ORG_PERMISSIONS[ORGANIZATION_ROLE.MEMBER]).toEqual([
-      PERMISSION.WATCH,
-      PERMISSION.EDIT,
-    ]);
-  });
-
-  it("checks permissions correctly", () => {
-    expect(hasPermission(ORGANIZATION_ROLE.OWNER, PERMISSION.WATCH)).toBe(true);
-    expect(hasPermission(ORGANIZATION_ROLE.OWNER, PERMISSION.MANAGE_ROLES)).toBe(true);
-    expect(hasPermission(ORGANIZATION_ROLE.GUEST, PERMISSION.EDIT)).toBe(false);
-    expect(hasPermission(ORGANIZATION_ROLE.GUEST, PERMISSION.MANAGE_ROLES)).toBe(false);
-  });
-
-  it("checks project scope permissions", () => {
-    expect(hasPermission(ORGANIZATION_ROLE.MEMBER, PERMISSION.EDIT, "project")).toBe(true);
-    expect(hasPermission(ORGANIZATION_ROLE.GUEST, PERMISSION.EDIT, "project")).toBe(false);
-  });
-
-  it("defaults to organization scope", () => {
-    expect(hasPermission(ORGANIZATION_ROLE.ADMIN, PERMISSION.MANAGE_ROLES)).toBe(true);
-  });
-
-  it("allows issue deletion with EDIT permission", () => {
-    expect(canDelete(ORGANIZATION_ROLE.MEMBER, "issue")).toBe(true);
-    expect(canDelete(ORGANIZATION_ROLE.GUEST, "issue")).toBe(false);
-  });
-
-  it("restricts project/org deletion to creator", () => {
-    expect(canDelete(ORGANIZATION_ROLE.ADMIN, "project", true)).toBe(true);
-    expect(canDelete(ORGANIZATION_ROLE.ADMIN, "project", false)).toBe(false);
-    expect(canDelete(ORGANIZATION_ROLE.OWNER, "organization", true)).toBe(true);
-    expect(canDelete(ORGANIZATION_ROLE.MEMBER, "organization", false)).toBe(false);
+  it("returns permission labels from string mapping values", () => {
+    expect(getPermissionLabel(PERMISSION.ORG_MANAGE)).toBe("Manage Organization");
+    expect(getPermissionLabel(PERMISSION.MEMBER_INVITE)).toBe("Invite Members");
   });
 });
