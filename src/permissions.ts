@@ -1,4 +1,4 @@
-import { ORGANIZATION_ROLE, type OrganizationRole } from "./organization/roles";
+import { ROLE, type Role } from "./organization/roles";
 import { createLabelGetter } from "./shared";
 
 export const PERMISSION = {
@@ -21,43 +21,43 @@ export const getPermissionLabel =
   createLabelGetter<Permission>(PERMISSION_LABEL);
 
 export const ORG_PERMISSIONS: Record<
-  OrganizationRole,
+  Role,
   readonly Permission[]
 > = {
-  [ORGANIZATION_ROLE.OWNER]: [
+  [ROLE.OWNER]: [
     PERMISSION.WATCH,
     PERMISSION.EDIT,
     PERMISSION.MANAGE_ROLES,
   ],
-  [ORGANIZATION_ROLE.ADMIN]: [
+  [ROLE.ADMIN]: [
     PERMISSION.WATCH,
     PERMISSION.EDIT,
     PERMISSION.MANAGE_ROLES,
   ],
-  [ORGANIZATION_ROLE.MEMBER]: [PERMISSION.WATCH, PERMISSION.EDIT],
-  [ORGANIZATION_ROLE.GUEST]: [PERMISSION.WATCH],
+  [ROLE.MEMBER]: [PERMISSION.WATCH, PERMISSION.EDIT],
+  [ROLE.GUEST]: [PERMISSION.WATCH],
 };
 
 export const PROJECT_PERMISSIONS: Record<
-  OrganizationRole,
+  Role,
   readonly Permission[]
 > = {
-  [ORGANIZATION_ROLE.OWNER]: [
+  [ROLE.OWNER]: [
     PERMISSION.WATCH,
     PERMISSION.EDIT,
     PERMISSION.MANAGE_ROLES,
   ],
-  [ORGANIZATION_ROLE.ADMIN]: [
+  [ROLE.ADMIN]: [
     PERMISSION.WATCH,
     PERMISSION.EDIT,
     PERMISSION.MANAGE_ROLES,
   ],
-  [ORGANIZATION_ROLE.MEMBER]: [PERMISSION.WATCH, PERMISSION.EDIT],
-  [ORGANIZATION_ROLE.GUEST]: [PERMISSION.WATCH],
+  [ROLE.MEMBER]: [PERMISSION.WATCH, PERMISSION.EDIT],
+  [ROLE.GUEST]: [PERMISSION.WATCH],
 };
 
 export const hasPermission = (
-  role: OrganizationRole,
+  role: Role,
   permission: Permission,
   scope: "organization" | "project" = "organization",
 ): boolean => {
@@ -66,7 +66,7 @@ export const hasPermission = (
 };
 
 export const canDelete = (
-  role: OrganizationRole,
+  role: Role,
   resourceType: "organization" | "project" | "issue",
   isCreator: boolean = false,
 ): boolean => {
