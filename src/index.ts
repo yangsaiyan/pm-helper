@@ -1,4 +1,5 @@
 export * from "./boards";
+export * from "./currencies";
 export * from "./issues";
 export * from "./organization";
 export * from "./permissions";
