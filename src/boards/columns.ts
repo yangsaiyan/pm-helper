@@ -16,8 +16,18 @@ export const EXPENSES_CLAIM_COLUMN_CATEGORY = {
   REOPENED: 4,
 } as const;
 
+export const VENUE_BOOKING_COLUMN_CATEGORY = {
+  PENDING: 1,
+  APPROVED: 2,
+  REJECTED: 3,
+  REOPENED: 4,
+} as const;
+
 export type ColumnCategory =
   (typeof COLUMN_CATEGORY)[keyof typeof COLUMN_CATEGORY];
 
 export type ExpensesClaimColumnCategory =
   (typeof EXPENSES_CLAIM_COLUMN_CATEGORY)[keyof typeof EXPENSES_CLAIM_COLUMN_CATEGORY];
+
+export type VenueBookingColumnCategory =
+  (typeof VENUE_BOOKING_COLUMN_CATEGORY)[keyof typeof VENUE_BOOKING_COLUMN_CATEGORY];

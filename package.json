@@ -1,6 +1,6 @@
 {
   "name": "@korre/mappings",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Shared typed mapping constants for Korre project management apps.",
   "type": "module",
   "packageManager": "pnpm@10.33.0",
