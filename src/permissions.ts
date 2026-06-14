@@ -1,6 +1,9 @@
+import { createLabelGetter } from "./shared";
+
 export const PERMISSION = {
   ORG_MANAGE: "org.manage",
   MEMBER_INVITE: "member.invite",
+  ANNOUNCEMENT_MANAGE: "announcement.manage",
   PROJECT_CREATE: "project.create",
   PROJECT_UPDATE: "project.update",
   PROJECT_DELETE: "project.delete",
@@ -18,3 +21,26 @@ export const PERMISSION = {
 } as const;
 
 export type Permission = (typeof PERMISSION)[keyof typeof PERMISSION];
+
+export const PERMISSION_LABEL: Record<Permission, string> = {
+  [PERMISSION.ORG_MANAGE]: "Manage Organization",
+  [PERMISSION.MEMBER_INVITE]: "Invite Members",
+  [PERMISSION.ANNOUNCEMENT_MANAGE]: "Manage Announcements",
+  [PERMISSION.PROJECT_CREATE]: "Create Projects",
+  [PERMISSION.PROJECT_UPDATE]: "Update Projects",
+  [PERMISSION.PROJECT_DELETE]: "Delete Projects",
+  [PERMISSION.ISSUE_KANBAN_CREATE]: "Create Kanban Issues",
+  [PERMISSION.ISSUE_KANBAN_UPDATE]: "Update Kanban Issues",
+  [PERMISSION.ISSUE_KANBAN_DELETE]: "Delete Kanban Issues",
+  [PERMISSION.ISSUE_EXPENSES_CLAIM_CREATE]: "Create Expense Claims",
+  [PERMISSION.ISSUE_EXPENSES_CLAIM_EDIT]: "Edit Expense Claims",
+  [PERMISSION.ISSUE_EXPENSES_CLAIM_UPDATE]: "Update Expense Claims",
+  [PERMISSION.ISSUE_EXPENSES_CLAIM_DELETE]: "Delete Expense Claims",
+  [PERMISSION.ISSUE_VENUE_BOOKING_CREATE]: "Create Venue Bookings",
+  [PERMISSION.ISSUE_VENUE_BOOKING_EDIT]: "Edit Venue Bookings",
+  [PERMISSION.ISSUE_VENUE_BOOKING_UPDATE]: "Update Venue Bookings",
+  [PERMISSION.ISSUE_VENUE_BOOKING_DELETE]: "Delete Venue Bookings",
+};
+
+export const getPermissionLabel =
+  createLabelGetter<Permission>(PERMISSION_LABEL);

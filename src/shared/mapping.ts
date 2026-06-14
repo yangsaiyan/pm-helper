@@ -19,6 +19,6 @@ export const mappingEntries = <TMapping extends NumericMapping>(
   );
 
 export const createLabelGetter =
-  <TValue extends number>(labels: Readonly<Record<TValue, string>>) =>
+  <TValue extends string | number>(labels: Readonly<Record<TValue, string>>) =>
   (value: TValue): string =>
     labels[value];
