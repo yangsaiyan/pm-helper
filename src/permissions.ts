@@ -18,6 +18,10 @@ export const PERMISSION = {
   ISSUE_VENUE_BOOKING_EDIT: "issue.venue_booking.edit",
   ISSUE_VENUE_BOOKING_UPDATE: "issue.venue_booking.update",
   ISSUE_VENUE_BOOKING_DELETE: "issue.venue_booking.delete",
+  ISSUE_ASSET_BOOKING_CREATE: "issue.asset_booking.create",
+  ISSUE_ASSET_BOOKING_EDIT: "issue.asset_booking.edit",
+  ISSUE_ASSET_BOOKING_UPDATE: "issue.asset_booking.update",
+  ISSUE_ASSET_BOOKING_DELETE: "issue.asset_booking.delete",
 } as const;
 
 export type Permission = (typeof PERMISSION)[keyof typeof PERMISSION];
@@ -40,6 +44,10 @@ export const PERMISSION_LABEL: Record<Permission, string> = {
   [PERMISSION.ISSUE_VENUE_BOOKING_EDIT]: "Edit Venue Bookings",
   [PERMISSION.ISSUE_VENUE_BOOKING_UPDATE]: "Update Venue Bookings",
   [PERMISSION.ISSUE_VENUE_BOOKING_DELETE]: "Delete Venue Bookings",
+  [PERMISSION.ISSUE_ASSET_BOOKING_CREATE]: "Create Asset Bookings",
+  [PERMISSION.ISSUE_ASSET_BOOKING_EDIT]: "Edit Asset Bookings",
+  [PERMISSION.ISSUE_ASSET_BOOKING_UPDATE]: "Update Asset Bookings",
+  [PERMISSION.ISSUE_ASSET_BOOKING_DELETE]: "Delete Asset Bookings",
 };
 
 export const getPermissionLabel =
