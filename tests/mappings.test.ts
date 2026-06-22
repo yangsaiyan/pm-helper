@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  ASSET_TYPE,
   COLUMN_CATEGORY,
   ISSUE_PRIORITY,
   ISSUE_PRIORITY_LABEL,
@@ -8,6 +9,7 @@ import {
   PERMISSION,
   PERMISSION_LABEL,
   REQUEST_LOG_METHOD,
+  getAssetTypeLabel,
   getIssuePriorityLabel,
   getIssueTypeLabel,
   getPermissionLabel,
@@ -44,6 +46,24 @@ describe("shared mapping constants", () => {
       DONE: 5,
       CANCELLED: 6,
     });
+  });
+
+  it("keeps asset type mapping stable", () => {
+    expect(ASSET_TYPE).toEqual({
+      VEHICLE: 0,
+      LAPTOP: 1,
+      PROJECTOR: 2,
+      EQUIPMENT: 3,
+      FURNITURE: 4,
+      MONITOR: 5,
+      PRINTER: 6,
+      CAMERA: 7,
+      TABLET: 8,
+      MOBILE_DEVICE: 9,
+      OTHER: 10,
+    });
+    expect(getAssetTypeLabel(ASSET_TYPE.EQUIPMENT)).toBe("Equipment");
+    expect(getAssetTypeLabel(ASSET_TYPE.OTHER)).toBe("Other");
   });
 
   it("returns issue labels from numeric mapping values", () => {
@@ -93,6 +113,10 @@ describe("shared mapping constants", () => {
       ISSUE_VENUE_BOOKING_EDIT: "issue.venue_booking.edit",
       ISSUE_VENUE_BOOKING_UPDATE: "issue.venue_booking.update",
       ISSUE_VENUE_BOOKING_DELETE: "issue.venue_booking.delete",
+      ISSUE_ASSET_BOOKING_CREATE: "issue.asset_booking.create",
+      ISSUE_ASSET_BOOKING_EDIT: "issue.asset_booking.edit",
+      ISSUE_ASSET_BOOKING_UPDATE: "issue.asset_booking.update",
+      ISSUE_ASSET_BOOKING_DELETE: "issue.asset_booking.delete",
     });
   });
 
@@ -115,6 +139,10 @@ describe("shared mapping constants", () => {
       [PERMISSION.ISSUE_VENUE_BOOKING_EDIT]: "Edit Venue Bookings",
       [PERMISSION.ISSUE_VENUE_BOOKING_UPDATE]: "Update Venue Bookings",
       [PERMISSION.ISSUE_VENUE_BOOKING_DELETE]: "Delete Venue Bookings",
+      [PERMISSION.ISSUE_ASSET_BOOKING_CREATE]: "Create Asset Bookings",
+      [PERMISSION.ISSUE_ASSET_BOOKING_EDIT]: "Edit Asset Bookings",
+      [PERMISSION.ISSUE_ASSET_BOOKING_UPDATE]: "Update Asset Bookings",
+      [PERMISSION.ISSUE_ASSET_BOOKING_DELETE]: "Delete Asset Bookings",
     });
   });
 
