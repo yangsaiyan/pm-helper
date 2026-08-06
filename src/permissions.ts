@@ -14,6 +14,7 @@ export const PERMISSION = {
   ISSUE_EXPENSES_CLAIM_EDIT: "issue.expenses_claim.edit",
   ISSUE_EXPENSES_CLAIM_UPDATE: "issue.expenses_claim.update",
   ISSUE_EXPENSES_CLAIM_DELETE: "issue.expenses_claim.delete",
+  EXPENSES_CLAIM_CATEGORY_MANAGE: "expenses_claim.category.manage",
   ISSUE_VENUE_BOOKING_CREATE: "issue.venue_booking.create",
   ISSUE_VENUE_BOOKING_EDIT: "issue.venue_booking.edit",
   ISSUE_VENUE_BOOKING_UPDATE: "issue.venue_booking.update",
@@ -22,6 +23,12 @@ export const PERMISSION = {
   ISSUE_ASSET_BOOKING_EDIT: "issue.asset_booking.edit",
   ISSUE_ASSET_BOOKING_UPDATE: "issue.asset_booking.update",
   ISSUE_ASSET_BOOKING_DELETE: "issue.asset_booking.delete",
+  ACCOUNTING_ACCOUNT_MANAGE: "accounting.account.manage",
+  ACCOUNTING_LEDGER_READ: "accounting.ledger.read",
+  ACCOUNTING_JOURNAL_POST: "accounting.journal.post",
+  ACCOUNTING_JOURNAL_REVERSE: "accounting.journal.reverse",
+  ACCOUNTING_PERIOD_CLOSE: "accounting.period.close",
+  ACCOUNTING_EXCHANGE_RATE_MANAGE: "accounting.exchange_rate.manage",
 } as const;
 
 export type Permission = (typeof PERMISSION)[keyof typeof PERMISSION];
@@ -40,6 +47,8 @@ export const PERMISSION_LABEL: Record<Permission, string> = {
   [PERMISSION.ISSUE_EXPENSES_CLAIM_EDIT]: "Edit Expense Claims",
   [PERMISSION.ISSUE_EXPENSES_CLAIM_UPDATE]: "Update Expense Claims",
   [PERMISSION.ISSUE_EXPENSES_CLAIM_DELETE]: "Delete Expense Claims",
+  [PERMISSION.EXPENSES_CLAIM_CATEGORY_MANAGE]:
+    "Manage Expense Claim Categories",
   [PERMISSION.ISSUE_VENUE_BOOKING_CREATE]: "Create Venue Bookings",
   [PERMISSION.ISSUE_VENUE_BOOKING_EDIT]: "Edit Venue Bookings",
   [PERMISSION.ISSUE_VENUE_BOOKING_UPDATE]: "Update Venue Bookings",
@@ -48,6 +57,12 @@ export const PERMISSION_LABEL: Record<Permission, string> = {
   [PERMISSION.ISSUE_ASSET_BOOKING_EDIT]: "Edit Asset Bookings",
   [PERMISSION.ISSUE_ASSET_BOOKING_UPDATE]: "Update Asset Bookings",
   [PERMISSION.ISSUE_ASSET_BOOKING_DELETE]: "Delete Asset Bookings",
+  [PERMISSION.ACCOUNTING_ACCOUNT_MANAGE]: "Manage Chart of Accounts",
+  [PERMISSION.ACCOUNTING_LEDGER_READ]: "View Ledger",
+  [PERMISSION.ACCOUNTING_JOURNAL_POST]: "Post Journal Entries",
+  [PERMISSION.ACCOUNTING_JOURNAL_REVERSE]: "Reverse Journal Entries",
+  [PERMISSION.ACCOUNTING_PERIOD_CLOSE]: "Close Fiscal Periods",
+  [PERMISSION.ACCOUNTING_EXCHANGE_RATE_MANAGE]: "Manage Exchange Rates",
 };
 
 export const getPermissionLabel =
