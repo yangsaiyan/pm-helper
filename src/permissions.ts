@@ -31,6 +31,7 @@ export const PERMISSION = {
   ACCOUNTING_EXCHANGE_RATE_MANAGE: "accounting.exchange_rate.manage",
   ACCOUNTING_INVOICE_MANAGE: "accounting.invoice.manage",
   ACCOUNTING_INVOICE_ISSUE: "accounting.invoice.issue",
+  ACCOUNTING_BANK_RECONCILE: "accounting.bank.reconcile",
 } as const;
 
 export type Permission = (typeof PERMISSION)[keyof typeof PERMISSION];
@@ -67,6 +68,7 @@ export const PERMISSION_LABEL: Record<Permission, string> = {
   [PERMISSION.ACCOUNTING_EXCHANGE_RATE_MANAGE]: "Manage Exchange Rates",
   [PERMISSION.ACCOUNTING_INVOICE_MANAGE]: "Manage Invoices",
   [PERMISSION.ACCOUNTING_INVOICE_ISSUE]: "Issue Invoices",
+  [PERMISSION.ACCOUNTING_BANK_RECONCILE]: "Reconcile Bank Accounts",
 };
 
 export const getPermissionLabel =
