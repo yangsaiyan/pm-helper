@@ -124,6 +124,8 @@ describe("shared mapping constants", () => {
       ACCOUNTING_JOURNAL_REVERSE: "accounting.journal.reverse",
       ACCOUNTING_PERIOD_CLOSE: "accounting.period.close",
       ACCOUNTING_EXCHANGE_RATE_MANAGE: "accounting.exchange_rate.manage",
+      ACCOUNTING_INVOICE_MANAGE: "accounting.invoice.manage",
+      ACCOUNTING_INVOICE_ISSUE: "accounting.invoice.issue",
     });
   });
 
@@ -158,6 +160,8 @@ describe("shared mapping constants", () => {
       [PERMISSION.ACCOUNTING_JOURNAL_REVERSE]: "Reverse Journal Entries",
       [PERMISSION.ACCOUNTING_PERIOD_CLOSE]: "Close Fiscal Periods",
       [PERMISSION.ACCOUNTING_EXCHANGE_RATE_MANAGE]: "Manage Exchange Rates",
+      [PERMISSION.ACCOUNTING_INVOICE_MANAGE]: "Manage Invoices",
+      [PERMISSION.ACCOUNTING_INVOICE_ISSUE]: "Issue Invoices",
     });
   });
 
