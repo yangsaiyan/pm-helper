@@ -1,17 +1,21 @@
 import { describe, expect, it } from "vitest";
 import {
   ASSET_TYPE,
+  CLAIM_TYPE,
   COLUMN_CATEGORY,
   ISSUE_PRIORITY,
   ISSUE_PRIORITY_LABEL,
   ISSUE_TYPE,
   ORGANIZATION_ROLE,
+  PAYMENT_METHOD,
   PERMISSION,
   PERMISSION_LABEL,
   REQUEST_LOG_METHOD,
   getAssetTypeLabel,
+  getClaimTypeLabel,
   getIssuePriorityLabel,
   getIssueTypeLabel,
+  getPaymentMethodLabel,
   getPermissionLabel,
   getRequestLogMethodLabel,
   mappingEntries,
@@ -64,6 +68,30 @@ describe("shared mapping constants", () => {
     });
     expect(getAssetTypeLabel(ASSET_TYPE.EQUIPMENT)).toBe("Equipment");
     expect(getAssetTypeLabel(ASSET_TYPE.OTHER)).toBe("Other");
+  });
+
+  it("keeps payment method mapping stable", () => {
+    expect(PAYMENT_METHOD).toEqual({
+      CASH: 0,
+      CREDIT_CARD: 1,
+      BANK_TRANSFER: 2,
+      E_WALLET: 3,
+      COMPANY_CARD: 4,
+    });
+    expect(getPaymentMethodLabel(PAYMENT_METHOD.CASH)).toBe("Cash");
+    expect(getPaymentMethodLabel(PAYMENT_METHOD.COMPANY_CARD)).toBe(
+      "Company card",
+    );
+  });
+
+  it("keeps claim type mapping stable", () => {
+    expect(CLAIM_TYPE).toEqual({
+      RECEIPT: 0,
+      MILEAGE: 1,
+      PER_DIEM: 2,
+    });
+    expect(getClaimTypeLabel(CLAIM_TYPE.RECEIPT)).toBe("Receipt");
+    expect(getClaimTypeLabel(CLAIM_TYPE.PER_DIEM)).toBe("Per diem");
   });
 
   it("returns issue labels from numeric mapping values", () => {
