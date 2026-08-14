@@ -3,6 +3,7 @@ import {
   ASSET_TYPE,
   CLAIM_TYPE,
   COLUMN_CATEGORY,
+  FX_MODE,
   ISSUE_PRIORITY,
   ISSUE_PRIORITY_LABEL,
   ISSUE_TYPE,
@@ -13,6 +14,7 @@ import {
   REQUEST_LOG_METHOD,
   getAssetTypeLabel,
   getClaimTypeLabel,
+  getFxModeLabel,
   getIssuePriorityLabel,
   getIssueTypeLabel,
   getPaymentMethodLabel,
@@ -92,6 +94,15 @@ describe("shared mapping constants", () => {
     });
     expect(getClaimTypeLabel(CLAIM_TYPE.RECEIPT)).toBe("Receipt");
     expect(getClaimTypeLabel(CLAIM_TYPE.PER_DIEM)).toBe("Per diem");
+  });
+
+  it("keeps fx mode mapping stable", () => {
+    expect(FX_MODE).toEqual({
+      DECLARED: 0,
+      TABLE: 1,
+    });
+    expect(getFxModeLabel(FX_MODE.DECLARED)).toBe("Bank charge");
+    expect(getFxModeLabel(FX_MODE.TABLE)).toBe("Converted at rate");
   });
 
   it("returns issue labels from numeric mapping values", () => {
