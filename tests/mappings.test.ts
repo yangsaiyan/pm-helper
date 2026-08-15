@@ -3,6 +3,7 @@ import {
   ASSET_TYPE,
   CLAIM_TYPE,
   COLUMN_CATEGORY,
+  CURRENCY_CODE,
   FX_MODE,
   ISSUE_PRIORITY,
   ISSUE_PRIORITY_LABEL,
@@ -14,6 +15,7 @@ import {
   REQUEST_LOG_METHOD,
   getAssetTypeLabel,
   getClaimTypeLabel,
+  getCurrencyCodeLabel,
   getFxModeLabel,
   getIssuePriorityLabel,
   getIssueTypeLabel,
@@ -94,6 +96,18 @@ describe("shared mapping constants", () => {
     });
     expect(getClaimTypeLabel(CLAIM_TYPE.RECEIPT)).toBe("Receipt");
     expect(getClaimTypeLabel(CLAIM_TYPE.PER_DIEM)).toBe("Per diem");
+  });
+
+  it("keeps currency code mapping stable", () => {
+    expect(CURRENCY_CODE).toEqual({
+      MYR: 0,
+      CNY: 1,
+      VND: 2,
+      USD: 3,
+      USDT: 4,
+    });
+    expect(getCurrencyCodeLabel(CURRENCY_CODE.MYR)).toBe("MYR");
+    expect(getCurrencyCodeLabel(CURRENCY_CODE.USDT)).toBe("USDT");
   });
 
   it("keeps fx mode mapping stable", () => {
