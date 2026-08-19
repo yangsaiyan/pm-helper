@@ -1,9 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   ASSET_TYPE,
+  CLAIM_REJECTION_REASON_MAX,
   CLAIM_TYPE,
   COLUMN_CATEGORY,
   CURRENCY_CODE,
+  EXPENSES_CLAIM_COLUMN_CATEGORY,
+  EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL_ZH,
+  EXPENSES_CLAIM_COLUMN_POSITION,
   FX_MODE,
   ISSUE_PRIORITY,
   ISSUE_PRIORITY_LABEL,
@@ -16,12 +20,15 @@ import {
   getAssetTypeLabel,
   getClaimTypeLabel,
   getCurrencyCodeLabel,
+  getExpensesClaimColumnCategoryLabel,
+  getExpensesClaimColumnCategoryLabelZh,
   getFxModeLabel,
   getIssuePriorityLabel,
   getIssueTypeLabel,
   getPaymentMethodLabel,
   getPermissionLabel,
   getRequestLogMethodLabel,
+  isClaimReasonRequired,
   mappingEntries,
 } from "../src";
 
@@ -54,6 +61,112 @@ describe("shared mapping constants", () => {
       DONE: 5,
       CANCELLED: 6,
     });
+  });
+
+  it("appends expenses claim column categories without renumbering 0-5", () => {
+    expect(EXPENSES_CLAIM_COLUMN_CATEGORY).toEqual({
+      DRAFT: 0,
+      PENDING_REVIEW: 1,
+      REVIEWED: 2,
+      APPROVED: 3,
+      COMPLETED: 4,
+      REJECTED: 5,
+      CATEGORY_VERIFIED: 6,
+      RECEIVED: 7,
+      SETTLED: 8,
+    });
+  });
+
+  it("labels expenses claim columns in english and chinese", () => {
+    expect(
+      getExpensesClaimColumnCategoryLabel(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED,
+      ),
+    ).toBe("Verified");
+    expect(
+      getExpensesClaimColumnCategoryLabel(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED,
+      ),
+    ).toBe("Received");
+    expect(
+      getExpensesClaimColumnCategoryLabelZh(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED,
+      ),
+    ).toBe("已核对");
+    expect(
+      getExpensesClaimColumnCategoryLabelZh(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED,
+      ),
+    ).toBe("已收款");
+    expect(
+      getExpensesClaimColumnCategoryLabel(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED,
+      ),
+    ).toBe("Settled");
+    expect(
+      getExpensesClaimColumnCategoryLabelZh(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED,
+      ),
+    ).toBe("已结算");
+  });
+
+  it("uses the chinese column names the product actually seeds", () => {
+    const zh = EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL_ZH;
+    expect(zh[EXPENSES_CLAIM_COLUMN_CATEGORY.PENDING_REVIEW]).toBe("待审批");
+    expect(zh[EXPENSES_CLAIM_COLUMN_CATEGORY.REVIEWED]).toBe("已审批");
+    expect(zh[EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED]).toBe("已出款");
+  });
+
+  it("orders expenses claim board positions by workflow, not category", () => {
+    expect(EXPENSES_CLAIM_COLUMN_POSITION).toEqual({
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.DRAFT]: 0,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.PENDING_REVIEW]: 1,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.REVIEWED]: 2,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: 3,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED]: 4,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED]: 5,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: 6,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: 7,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 8,
+    });
+    expect(
+      EXPENSES_CLAIM_COLUMN_POSITION[
+        EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED
+      ],
+    ).toBeLessThan(
+      EXPENSES_CLAIM_COLUMN_POSITION[EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED],
+    );
+    expect(
+      EXPENSES_CLAIM_COLUMN_POSITION[EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED],
+    ).not.toBe(EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED);
+  });
+
+  it("requires a reason only on rejection and on non-receipt", () => {
+    expect(
+      isClaimReasonRequired(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.PENDING_REVIEW,
+        EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED,
+      ),
+    ).toBe(true);
+    expect(
+      isClaimReasonRequired(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED,
+        EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED,
+      ),
+    ).toBe(true);
+    expect(
+      isClaimReasonRequired(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.REVIEWED,
+        EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED,
+      ),
+    ).toBe(false);
+    expect(
+      isClaimReasonRequired(
+        EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED,
+        EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED,
+      ),
+    ).toBe(false);
+    expect(CLAIM_REJECTION_REASON_MAX).toBe(1000);
   });
 
   it("keeps asset type mapping stable", () => {
@@ -93,9 +206,11 @@ describe("shared mapping constants", () => {
       RECEIPT: 0,
       MILEAGE: 1,
       PER_DIEM: 2,
+      ADVANCE: 3,
     });
     expect(getClaimTypeLabel(CLAIM_TYPE.RECEIPT)).toBe("Receipt");
     expect(getClaimTypeLabel(CLAIM_TYPE.PER_DIEM)).toBe("Per diem");
+    expect(getClaimTypeLabel(CLAIM_TYPE.ADVANCE)).toBe("Advance");
   });
 
   it("keeps currency code mapping stable", () => {
@@ -180,6 +295,7 @@ describe("shared mapping constants", () => {
       ACCOUNTING_INVOICE_MANAGE: "accounting.invoice.manage",
       ACCOUNTING_INVOICE_ISSUE: "accounting.invoice.issue",
       ACCOUNTING_BANK_RECONCILE: "accounting.bank.reconcile",
+      ACCOUNTING_CLAIM_RATE_MANAGE: "accounting.claim_rate.manage",
     });
   });
 
@@ -217,6 +333,7 @@ describe("shared mapping constants", () => {
       [PERMISSION.ACCOUNTING_INVOICE_MANAGE]: "Manage Invoices",
       [PERMISSION.ACCOUNTING_INVOICE_ISSUE]: "Issue Invoices",
       [PERMISSION.ACCOUNTING_BANK_RECONCILE]: "Reconcile Bank Accounts",
+      [PERMISSION.ACCOUNTING_CLAIM_RATE_MANAGE]: "Manage Claim Rates",
     });
   });
 
