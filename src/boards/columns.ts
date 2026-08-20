@@ -19,7 +19,6 @@ export const EXPENSES_CLAIM_COLUMN_CATEGORY = {
   REJECTED: 5,
   CATEGORY_VERIFIED: 6,
   RECEIVED: 7,
-  SETTLED: 8,
 } as const;
 
 export const VENUE_BOOKING_COLUMN_CATEGORY = {
@@ -50,7 +49,6 @@ export const EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL: Record<
   [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: "Rejected",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: "Verified",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: "Received",
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: "Settled",
 };
 
 export const EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL_ZH: Record<
@@ -65,7 +63,6 @@ export const EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL_ZH: Record<
   [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: "已拒绝",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: "已核对",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: "已收款",
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: "已结算",
 };
 
 export const getExpensesClaimColumnCategoryLabel =
@@ -82,8 +79,8 @@ export const getExpensesClaimColumnCategoryLabelZh =
  * Board position is workflow order and no longer equals the category value.
  *
  * Verified sits AHEAD of Approved: the category is checked before the accrual
- * picks an expense account from it. Settled follows Received and closes out an
- * advance; Rejected stays last as the terminal failure state.
+ * picks an expense account from it. Rejected stays last as the terminal
+ * failure state.
  */
 export const EXPENSES_CLAIM_COLUMN_POSITION: Record<
   ExpensesClaimColumnCategory,
@@ -96,8 +93,7 @@ export const EXPENSES_CLAIM_COLUMN_POSITION: Record<
   [EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED]: 4,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED]: 5,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: 6,
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: 7,
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 8,
+  [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 7,
 };
 
 /** Matches `VARCHAR(1000)` on `expenses_claim_events.reason`. */

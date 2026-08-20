@@ -73,7 +73,6 @@ describe("shared mapping constants", () => {
       REJECTED: 5,
       CATEGORY_VERIFIED: 6,
       RECEIVED: 7,
-      SETTLED: 8,
     });
   });
 
@@ -98,16 +97,6 @@ describe("shared mapping constants", () => {
         EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED,
       ),
     ).toBe("已收款");
-    expect(
-      getExpensesClaimColumnCategoryLabel(
-        EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED,
-      ),
-    ).toBe("Settled");
-    expect(
-      getExpensesClaimColumnCategoryLabelZh(
-        EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED,
-      ),
-    ).toBe("已结算");
   });
 
   it("uses the chinese column names the product actually seeds", () => {
@@ -126,8 +115,7 @@ describe("shared mapping constants", () => {
       [EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED]: 4,
       [EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED]: 5,
       [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: 6,
-      [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: 7,
-      [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 8,
+      [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 7,
     });
     expect(
       EXPENSES_CLAIM_COLUMN_POSITION[
