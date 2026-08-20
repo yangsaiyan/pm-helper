@@ -78,9 +78,21 @@ export const getExpensesClaimColumnCategoryLabelZh =
 /**
  * Board position is workflow order and no longer equals the category value.
  *
- * Verified sits AHEAD of Approved: the category is checked before the accrual
- * picks an expense account from it. Rejected stays last as the terminal
- * failure state.
+ * Approved sits AHEAD of Verified. This reverses the original order, and the
+ * invariant that order protected — never accrue to an account no human has
+ * verified — was preserved by moving the accrual rather than the steps: it is
+ * now raised on entry to CATEGORY_VERIFIED, not APPROVED. So the category is
+ * still checked at the moment it picks an expense account; only the approval
+ * signature now precedes it.
+ *
+ * Rejected stays last as the terminal failure state.
+ *
+ * ⚠️ Rejected is 7 here because SETTLED was removed from this package, but the
+ * seeded boards place Settled at 7 and Rejected at 8. This map therefore does
+ * NOT describe an existing board. It has shipped a wrong order in both
+ * directions before now, which is why neither the API nor the web client reads
+ * it to decide anything — treat it as display order only, and keep it in step
+ * with `CLAIM_COLUMNS` in the API's board-provisioning service.
  */
 export const EXPENSES_CLAIM_COLUMN_POSITION: Record<
   ExpensesClaimColumnCategory,
@@ -89,8 +101,8 @@ export const EXPENSES_CLAIM_COLUMN_POSITION: Record<
   [EXPENSES_CLAIM_COLUMN_CATEGORY.DRAFT]: 0,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.PENDING_REVIEW]: 1,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.REVIEWED]: 2,
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: 3,
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED]: 4,
+  [EXPENSES_CLAIM_COLUMN_CATEGORY.APPROVED]: 3,
+  [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: 4,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED]: 5,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: 6,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 7,
