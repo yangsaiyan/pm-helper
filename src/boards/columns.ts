@@ -19,7 +19,6 @@ export const EXPENSES_CLAIM_COLUMN_CATEGORY = {
   REJECTED: 5,
   CATEGORY_VERIFIED: 6,
   RECEIVED: 7,
-  SETTLED: 8,
 } as const;
 
 export const VENUE_BOOKING_COLUMN_CATEGORY = {
@@ -50,7 +49,6 @@ export const EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL: Record<
   [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: "Rejected",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: "Verified",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: "Received",
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: "Settled",
 };
 
 export const EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL_ZH: Record<
@@ -65,7 +63,6 @@ export const EXPENSES_CLAIM_COLUMN_CATEGORY_LABEL_ZH: Record<
   [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: "已拒绝",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: "已核对",
   [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: "已收款",
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: "已结算",
 };
 
 export const getExpensesClaimColumnCategoryLabel =
@@ -88,13 +85,14 @@ export const getExpensesClaimColumnCategoryLabelZh =
  * still checked at the moment it picks an expense account; only the approval
  * signature now precedes it.
  *
- * Settled follows Received and closes out an advance; Rejected stays last as
- * the terminal failure state.
+ * Rejected stays last as the terminal failure state.
  *
- * This map has shipped a wrong order in BOTH directions before now, which is
- * why neither the API nor the web client reads it to decide workflow. Treat it
- * as display order only, and keep it in step with `CLAIM_COLUMNS` in the API's
- * board-provisioning service.
+ * ⚠️ Rejected is 7 here because SETTLED was removed from this package, but the
+ * seeded boards place Settled at 7 and Rejected at 8. This map therefore does
+ * NOT describe an existing board. It has shipped a wrong order in both
+ * directions before now, which is why neither the API nor the web client reads
+ * it to decide anything — treat it as display order only, and keep it in step
+ * with `CLAIM_COLUMNS` in the API's board-provisioning service.
  */
 export const EXPENSES_CLAIM_COLUMN_POSITION: Record<
   ExpensesClaimColumnCategory,
@@ -107,8 +105,7 @@ export const EXPENSES_CLAIM_COLUMN_POSITION: Record<
   [EXPENSES_CLAIM_COLUMN_CATEGORY.CATEGORY_VERIFIED]: 4,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.COMPLETED]: 5,
   [EXPENSES_CLAIM_COLUMN_CATEGORY.RECEIVED]: 6,
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.SETTLED]: 7,
-  [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 8,
+  [EXPENSES_CLAIM_COLUMN_CATEGORY.REJECTED]: 7,
 };
 
 /** Matches `VARCHAR(1000)` on `expenses_claim_events.reason`. */
